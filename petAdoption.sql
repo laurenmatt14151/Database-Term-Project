@@ -25,7 +25,7 @@ CREATE TABLE Dog_Profile(
     BreedID INT,
     DogName TEXT,
     Age INT,
-    Size INT,
+    Size TEXT,
     AvailableForAdoption TEXT NOT NULL,
     Dog_Description TEXT,
     PRIMARY KEY (DogID),
@@ -56,15 +56,16 @@ INSERT INTO Breed_Info (BreedName, HairType, DiseasesProneTo) VALUES
 ('Beagle', 'Short', 'Epilepsy'),
 ('Bulldog', 'Short', 'Respiratory Problems');
 
-INSERT INTO Dog_Profile (DogName, Age, Size, AvailableForAdoption, Dog_Description) VALUES 
-('Buddy', 2, 'Medium', 'Yes', 'Very friendly and affectionate'),
-('Rocky', 3, 'Large', 'Yes', 'Gorgeous and energetic dog'),
-('Daisy', 1, 'Small', 'No', 'The sweetest dog with a bubbly personality'),
-('Max', 4, 'Small', 'Yes', 'Happy dog with a warm personality'),
-('Bella', 2, 'Medium', 'No', 'Calm and quiet dog that will bring peace to your life');
+INSERT INTO Dog_Profile (BreedID, DogName, Age, Size, AvailableForAdoption, Dog_Description) VALUES 
+(1, 'Buddy', 2, 'Medium', 'Yes', 'Very friendly and affectionate'),
+(3, 'Rocky', 3, 'Large', 'Yes', 'Gorgeous and energetic dog'),
+(4, 'Daisy', 1, 'Small', 'No', 'The sweetest dog with a bubbly personality'),
+(5, 'Max', 4, 'Small', 'Yes', 'Happy dog with a warm personality'),
+(2, 'Bella', 2, 'Medium', 'No', 'Calm and quiet dog that will bring peace to your life');
 
 INSERT INTO Adoption_Record (CustomerID, DogID, AdoptionDate) VALUES 
 (1, 3, '2022-01-15'),
 (3, 5, '2022-08-02'),
 (2, 3, '2023-05-18'),
 (4, 5, '2023-09-20');
+
