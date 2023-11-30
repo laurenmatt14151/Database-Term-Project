@@ -1,3 +1,8 @@
+/*
+Team: Pet Adoption
+Group: Lauren Matthews, Alaisha Johnson, Joshua Douglas
+*/
+
 DROP database IF EXISTS petAdoption;
 CREATE database petAdoption;
 USE petAdoption;
