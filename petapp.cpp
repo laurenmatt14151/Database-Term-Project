@@ -2,36 +2,30 @@
 Team: Pet Adoption
 Group: Lauren Matthews, Alaisha Johnson, Joshua Douglas
 */
-
 #include <stdlib.h>
 #include <iostream>
-#include<string>
-/*
- Include directly the different
- headers from cppconn/ and mysql_driver.h + mysql_util.h
- (and mysql_connection.h). This will reduce your build time!
-*/
+#include <string>
 #include "mysql_connection.h"
 #include <cppconn/driver.h>
 #include <cppconn/exception.h>
 #include <cppconn/resultset.h>
 #include <cppconn/statement.h>
 #include <cppconn/prepared_statement.h>
+
 using namespace std;
 
-// This program retrieves all of the musicians
-
-// Compile:
+//Compile:
 // g++ -I/usr/include petapp.cpp -o petapp -I /usr/local/lib -lmysqlcppconn
 // 
 // Execute:
 // ./petapp
 // 
- sql::Driver *driver;
- sql::Connection *con;
- sql::Statement *stmt;
- sql::ResultSet *res;
- sql::PreparedStatement  *prep_stmt;
+
+sql::Driver *driver;
+sql::Connection *con;
+sql::Statement *stmt;
+sql::ResultSet *res;
+sql::PreparedStatement *prep_stmt;
 
 void addDog();
 void addCustomer();
@@ -43,104 +37,71 @@ void showAllDogs();
 void showAllCustomers();
 void findall();
 
-int main(void)
-{
+int main(void) {
+    try {
+        driver = get_driver_instance();
+        con = driver->connect("tcp://127.0.0.1:3306", "root", "");
+        con->setSchema("petAdoption");
 
-try {
+        int option = 1;
 
-   
- /* Create a connection */
- driver = get_driver_instance();
+        while (option != 0) {
+            cout << "\n1. Add a Dog"
+                 << "\n2. Add a Customer"
+                 << "\n3. Find a Dog by id"
+                 << "\n4. Find a Customer by id"
+                 << "\n5. Find Adoption Record by Customer id"
+                 << "\n6. Find Breed info by Breed id"
+                 << "\n7. Show all Dogs"
+                 << "\n8. Show all Customers"
+                 << "\n9. Show all"
+                 << "\n0. Exit"
+                 << "\n\nChoice: ";
+            cin >> option;
 
-  
-con = driver->connect("tcp://127.0.0.1:3306", "root", "");
-
-/* Connect to the MySQL music database */
-    
- con->setSchema("petAdoption");
- //stmt = con->createStatement();
-    
- int option = 6;
- 
- while (option != 0) {
-     
-     cout << endl;
-     cout << "1. Add a Dog" << endl;
-     cout << "2. Add a Customer" << endl;
-     cout << "3. Find a Dog by id" << endl;
-     cout << "4. Find a Customer by id" << endl;
-     cout << "5. Find Adoption Record by Customer id" << endl;
-     cout << "6. Find Breed info by Breed id" << endl;
-     cout << "7. Show all Dogs" << endl;
-     cout << "8. Show all Customers" << endl;
-     cout << "9. Show all" << endl;
-     cout << "0. Exit" << endl << endl;
-     
-     cout << "Choice : ";
-     cin >> option;
-     
-     switch(option) {
-         case 0: cout << "Exiting program..." << endl;
-                 return EXIT_SUCCESS; 
-
-         case 1: addDog();
-                 break;  
-
-         case 2: addCustomer();
-                 break;             
-                 
-         case 3: findDogbyid();
-                 break;
-             
-         case 4: findCustomerbyid();
-                 break;
-         
-         case 5: findAdoptionRecord();
-                 break;
-         
-         case 6: findBreedInfo();
-                 break;             
-        
-         case 7: showAllDogs();
-                 break;
-         
-         case 8: showAllCustomers();
-                 break;             
-                 
-         case 9: findall();
-                 break;             
-             
-             
-     }
- }
- 
-
- delete res;
- delete stmt;
- delete con;
-} catch (sql::SQLException &e) {
- cout << "# ERR: SQLException in " << __FILE__;
- cout << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
- cout << "# ERR: " << e.what();
- cout << " (MySQL error code: " << e.getErrorCode();
- cout << ", SQLState: " << e.getSQLState() << " )" << endl;
-}
-cout << endl;
-return EXIT_SUCCESS;
-
-}
-//case 1
-void addDog(){ //incomplete
- 
+            switch (option) {
+                case 0:
+                    cout << "Exiting program..." << endl;
+                    return EXIT_SUCCESS;
+                case 1:
+                    addDog();
+                    break;
+                case 2:
+                    addCustomer();
+                    break;
+                case 3:
+                    findDogbyid();
+                    break;
+                case 4:
+                    findCustomerbyid();
+                    break;
+                case 5:
+                    findAdoptionRecord();
+                    break;
+                case 6:
+                    findBreedInfo();
+                    break;
+                case 7:
+                    showAllDogs();
+                    break;
+                case 8:
+                    showAllCustomers();
+                    break;
+                case 9:
+                    findall();
+                    break;
+            }
+        }
+    } catch (sql::SQLException &e) {
+        cout << "# ERR: SQLException in " << __FILE__ << "(" << __FUNCTION__ << ") on line " << __LINE__ << endl;
+        cout << "# ERR: " << e.what() << " (MySQL error code: " << e.getErrorCode() << ", SQLState: " << e.getSQLState() << " )" << endl;
+    }
+    cout << endl;
+    return EXIT_SUCCESS;
 }
 
-//case 2
-void addCustomer(){    //incomplete
- 
- 
-}
 
-//case 3
+
 void findDogbyid() {
      
  
@@ -158,19 +119,17 @@ res = prep_stmt->executeQuery();
  while (res->next()) {
 
  /* Access column data by alias or column name */
-     
-     cout << res->getString("DogId") << " ";
-     cout << res->getString("BreedId") << " ";
-     cout << res->getString("DogName") << " ";
-     cout << res->getString("Age") << " ";
-     cout << res->getString("Size") << " ";
+     cout << "DogId | BreedId | DogName | Age | Size | AvailableForAdoption | Dog_Description | " <<endl;
+     cout << res->getString("DogId") << " | ";
+     cout << res->getString("BreedId") << " | ";
+     cout << res->getString("DogName") << " | ";
+     cout << res->getString("Age") << " | ";
+     cout << res->getString("Size") << " | ";
      cout << res->getString("AvailableForAdoption") << endl;
      cout << res->getString("Dog_Description") << endl;
  
  }
 }
-
-//case 4
 void findCustomerbyid() {
      
  
@@ -188,18 +147,17 @@ res = prep_stmt->executeQuery();
  while (res->next()) {
 
  /* Access column data by alias or column name */
-     
-     cout << res->getString("CustomerID") << " ";
-     cout << res->getString("FirstName") << " ";
-     cout << res->getString("LastName") << " ";
-     cout << res->getString("PhoneNumber") << " ";
+ cout << "CustomerID | FirstName | LastName | PhoneNumber | Email | Cust_Address |" <<endl;    
+     cout << res->getString("CustomerID") << " | ";
+     cout << res->getString("FirstName") << " | ";
+     cout << res->getString("LastName") << " | ";
+     cout << res->getString("PhoneNumber") << " | ";
      cout << res->getString("Email") << endl;
      cout << res->getString("Cust_Address") << endl;
  }
      
  }
 
-//case 5
  void findAdoptionRecord(){    
  
  int id;
@@ -216,15 +174,15 @@ res = prep_stmt->executeQuery();
  while (res->next()) {
 
  /* Access column data by alias or column name */
-     
-     cout << res->getString("AdoptionID") << " ";
-     cout << res->getString("CustomerId") << " ";
-     cout << res->getString("DogID") << " ";
-     cout << res->getString("AdoptionDate") << " ";
+ cout << "AdoptionID | CustomerId | DogID | AdoptionDate |" <<endl;    
+     cout << res->getString("AdoptionID") << " | ";
+     cout << res->getString("CustomerId") << " | ";
+     cout << res->getString("DogID") << " | ";
+     cout << res->getString("AdoptionDate") << endl;
  }
  }
 
-//case 6
+
 void findBreedInfo(){ 
  
  int id;
@@ -241,15 +199,89 @@ res = prep_stmt->executeQuery();
  while (res->next()) {
 
  /* Access column data by alias or column name */
-     
-     cout << res->getString("BreedID") << " ";
-     cout << res->getString("BreedName") << " ";
-     cout << res->getString("HairType") << " ";
-     cout << res->getString("DiseasesProneTo") << " ";
+ cout << "BreedID | BreedName | HairType | DiseasesProneTo " <<endl;    
+     cout << res->getString("BreedID") << " | ";
+     cout << res->getString("BreedName") << " | ";
+     cout << res->getString("HairType") << " | ";
+     cout << res->getString("DiseasesProneTo") << " | ";
  }
  }
 
-//case 7
+
+void addDog(){ 
+  string dogName, dogDescription, breedName, hairType, diseasesProneTo,  size, availableForAdoption;
+    int age, breedID;
+
+    cout << "Enter Dog Name: ";
+    cin >> dogName;
+
+    cout << "Enter Breed ID: ";
+    cin >> breedID;
+
+    cout << "Enter Dog Age: ";
+    cin >> age;
+
+    cout << "Enter Dog size: ";
+    cin >> size;
+
+    cout << "Is available For Adoption: ";
+    cin >> availableForAdoption;
+
+    cout << "Enter Dog description: ";
+    cin >> dogDescription;
+    getline(cin, dogDescription);
+
+
+
+    prep_stmt = con->prepareStatement("INSERT INTO Dog_Profile (BreedID, DogName,Age,Size,AvailableForAdoption,Dog_Description) VALUES (?, ?, ?,?,?,?)");
+    prep_stmt->setString(1, dogName);
+    prep_stmt->setInt(2, breedID);
+    prep_stmt->setInt(3, age);
+    prep_stmt->setString(4, size);
+    prep_stmt->setString(5, availableForAdoption);
+    prep_stmt->setString(6, dogDescription);
+
+    prep_stmt->executeUpdate();
+
+    cout << "Dog added successfully!" << endl;
+}
+
+void addCustomer(){ 
+string custFName, custLName, Email, Cust_Address;
+int PhoneNumber;
+
+    cout << "Enter first Name: ";
+    cin >> custFName;
+
+    cout << "Enter last name: ";
+    cin >> custLName;
+
+    cout << "Enter Phone Number: ";
+    cin >> PhoneNumber;
+
+    cout << "Enter email: ";
+    cin >> Email;
+
+    cout << "Enter Address: ";
+    cin >> Cust_Address;
+
+
+     
+    prep_stmt = con->prepareStatement("INSERT INTO Customer_Profile (FirstName,LastName,PhoneNumber,Email,Cust_Address) VALUES (?,?,?,?,?)");
+    prep_stmt->setString(1, custFName);
+    prep_stmt->setString(2, custLName);
+    prep_stmt->setInt(3, PhoneNumber);
+    prep_stmt->setString(4, Email);
+    prep_stmt->setString(5, Cust_Address);
+
+
+    prep_stmt->executeUpdate();
+
+    cout << "Customer added successfully!" << endl;
+ 
+}
+
+
 void showAllDogs(){  
  
 
@@ -261,18 +293,17 @@ res = prep_stmt->executeQuery();
  while (res->next()) {
 
  /* Access column data by alias or column name */
-     
-     cout << res->getString("DogID") << " ";
-     cout << res->getString("BreedID") << " ";
-     cout << res->getString("DogName") << " ";
-     cout << res->getString("Age") << " ";
-     cout << res->getString("Size") << " ";
-     cout << res->getString("AvailableForAdoption") << " ";
+cout << "DogId | BreedId | DogName | Age | Size | AvailableForAdoption | Dog_Description | " <<endl;     
+     cout << res->getString("DogID") << " | ";
+     cout << res->getString("BreedID") << " | ";
+     cout << res->getString("DogName") << " | ";
+     cout << res->getString("Age") << " | ";
+     cout << res->getString("Size") << " | ";
+     cout << res->getString("AvailableForAdoption") << " | ";
      cout << res->getString("Dog_Description") << endl;
  }
  }
 
-//case 8
 void showAllCustomers(){   
  
 
@@ -284,22 +315,38 @@ res = prep_stmt->executeQuery();
  while (res->next()) {
 
  /* Access column data by alias or column name */
-     
-     cout << res->getString("CustomerID") << " ";
-     cout << res->getString("Firstname") << " ";
-     cout << res->getString("LastName") << " ";
-     cout << res->getString("PhoneNumber") << " ";
-     cout << res->getString("Email") << " ";
+ cout << "CustomerID | FirstName | LastName | PhoneNumber | Email | Cust_Address |" <<endl;    
+     cout << res->getString("CustomerID") << " | ";
+     cout << res->getString("Firstname") << " | ";
+     cout << res->getString("LastName") << " | ";
+     cout << res->getString("PhoneNumber") << " | ";
+     cout << res->getString("Email") << " | ";
      cout << res->getString("Cust_Address") << endl;
  }
  }
 
-//case 9
+
 void findall(){   
  
 showAllCustomers();
 showAllDogs();
 
  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
  
