@@ -233,7 +233,7 @@ void addDog(){
 
 
 
-    prep_stmt = con->prepareStatement("INSERT INTO Dog_Profile (BreedID, DogName,Age,Size,AvailableForAdoption,Dog_Description) VALUES (?, ?, ?,?,?,?)");
+    prep_stmt = con->prepareStatement("INSERT INTO Dog_Profile (BreedID, DogName, Age, Size, AvailableForAdoption, Dog_Description) VALUES (?,?,?,?,?,?)");
     prep_stmt->setString(1, dogName);
     prep_stmt->setInt(2, breedID);
     prep_stmt->setInt(3, age);
@@ -289,11 +289,11 @@ prep_stmt = con->prepareStatement("SELECT * FROM Dog_Profile");
 
 res = prep_stmt->executeQuery();
 
-
+cout << "DogId | BreedId | DogName | Age | Size | AvailableForAdoption | Dog_Description | " <<endl;
  while (res->next()) {
 
  /* Access column data by alias or column name */
-cout << "DogId | BreedId | DogName | Age | Size | AvailableForAdoption | Dog_Description | " <<endl;     
+
      cout << res->getString("DogID") << " | ";
      cout << res->getString("BreedID") << " | ";
      cout << res->getString("DogName") << " | ";
@@ -311,11 +311,12 @@ prep_stmt = con->prepareStatement("SELECT * FROM Customer_Profile");
 
 res = prep_stmt->executeQuery();
 
-
+cout << "CustomerID | FirstName | LastName | PhoneNumber | Email | Cust_Address |" <<endl;    
+ 
  while (res->next()) {
 
  /* Access column data by alias or column name */
- cout << "CustomerID | FirstName | LastName | PhoneNumber | Email | Cust_Address |" <<endl;    
+  
      cout << res->getString("CustomerID") << " | ";
      cout << res->getString("Firstname") << " | ";
      cout << res->getString("LastName") << " | ";
@@ -333,20 +334,3 @@ showAllDogs();
 
  }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
- 
