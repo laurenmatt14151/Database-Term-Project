@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAMU Adoption</title>
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <!-- <li><a href="animals.html">Animals</a></li>
+                <li><a href="contact.html">Contact Us</a></li> -->
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="home-background">
+            <h1> Thee <span>FAMU</span> <span class="two">Adoption</span></h1>
+            <h3>find your forever animal!</h3>
+        </section>
+
+        <div id="navigation">
+            <!-- Filter Menu -->
+            <button onclick="toggleSearchForm()">Search</button>
+            <button onclick="showAllDogs()">All Dogs</button>
+            <button onclick=" ">All Customers</button>
+            <button onclick="toggleAdoptionRecords()">Adoption Records</button>
+            <button onclick="toggleBreedSearch()">Breed Info</button>
+            <!-- Add more buttons for other functionalities -->
+        </div>
+        <div id="IDsearchSection" class="searchForm" style="display: none;">
+            <form id="searchForm" class="form-spacing">
+                <input type="number" id="searchId" placeholder="Enter ID">
+                <button type="button" onclick="findDogById()">Find Dog</button>
+                <button type="button" onclick="findCustomerById()">Find Customer</button>
+            </form>
+        </div>
+        <!-- Breed Search Section -->
+        <div id="breedSearchSection" class="searchForm" style="display:none;">
+            <form id="breedSearchForm">
+                <input type="number" id="breedId" placeholder="Enter Breed ID">
+                <button type="button" onclick="findBreedById()">Find Breed</button>
+                <button type="button" onclick="showAllBreeds()">Show All Breeds</button>
+            </form>
+        </div>
+        <!-- Adoption Records Section -->
+        <div id="adoptionRecordsSection" class="searchForm" style="display:none;">
+            <form id="adoptionRecordsForm">
+                <input type="number" id="adoptionRecordId" placeholder="Enter Adoption Record ID">
+                <button type="button" onclick="findAdoptionRecordById()">Find Record</button>
+                <button type="button" onclick="showAllAdoptionRecords()">Show All Records</button>
+            </form>
+        </div>
+        <div id="dogsGrid" class="grid-container">
+            <!-- Dog items will be populated here by JavaScript -->
+        </div>
+    
+        <!-- <div id="results">
+            Results will be inserted into this table 
+            <table id="resultsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Details</th>
+                    Add or remove columns as needed 
+                    </tr>
+                </thead>
+                <tbody>
+                    Results will be inserted here by the JavaScript 
+                </tbody>
+            </table>
+        </div> -->
+    </main>
+
+    <script>
+        function toggleSearchForm() {
+            var searchSection = document.getElementById('IDsearchSection');
+            searchSection.style.display = searchSection.style.display === 'none' ? 'block' : 'none';
+        }
+        function toggleBreedSearch() {
+            var breedSection = document.getElementById('breedSearchSection');
+            breedSection.style.display = breedSection.style.display === 'none' ? 'block' : 'none';
+        }
+        function toggleAdoptionRecords() {
+            var recordsSection = document.getElementById('adoptionRecordsSection');
+            recordsSection.style.display = recordsSection.style.display === 'none' ? 'block' : 'none';
+        }
+        function findDogById() {
+            var dogId = document.getElementById('dogIdInput').value; // Get dog ID from an input field
+            fetch('/findDogById?id=' + dogId)
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    // Process and display the data on your page
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
+</body>
+</html>

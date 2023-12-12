@@ -1,0 +1,128 @@
+/* CSS Reset */
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+/* index.html */
+
+/* Navigation */
+nav{
+    background-color: green;
+    height: 50px;  
+}
+nav ul{
+    list-style-type: none;
+    text-align: center;
+    font-size: 2.0em;
+    font-weight: bold;
+}
+nav ul li{
+    display: inline-block;
+}
+nav ul li a{
+    text-decoration: none;
+    color: white;
+    display: block;
+    padding:  0.5em 2em;
+}
+/* MAIN */
+.home-background{
+    background-image: url('../images/background.png');
+    height: 500px;
+}
+.home-background h1{
+    font-size:100px;
+    text-align: right;
+    margin-right: 10px;
+    color: lightgreen;
+    text-shadow: 0 4px 6px #000;
+    padding-top: 150px;
+}
+.home-background span{
+    color: orange;
+}
+.home-background span.two{
+    color: white;
+}
+.home-background h3{
+    text-align: center;
+    padding-left: 280px;
+}
+
+/* Filter Menu */
+
+#navigation {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  color: #000;
+  gap: 20px;
+  padding: 10px 10px;
+}
+#navigation button{
+    /* width: 20px; */
+    font-size: 1.5em;
+    padding-left: 10px;
+    background-color: green;
+    color: #fff;
+    box-shadow: 6px 4px 5px #000;
+    cursor: pointer;
+}
+
+#navigation button:hover{
+    background-color: orange;
+}
+.searchSection {
+    width: 100%; /* Search section takes the full width */
+    display: none; /* Initially hidden */
+    margin-top: 20px; /* Add some space above the search section */
+    text-align: center; /* Center-align the contents */
+}
+
+.searchForm {
+    margin: auto; /* Center the form on the page */
+}
+
+.searchForm input[type="number"],
+.searchForm button {
+    padding: 10px; /* Increase padding inside the input and button */
+    font-size: 1.2em; /* Larger text size */
+    margin: 5px; /* Add space around the input and button */
+    width: 30%; /* Make the input and button take up 30% of their container width */
+    min-width: 150px; /* Minimum width so elements don't become too small */
+}
+
+.searchForm button {
+    cursor: pointer; /* Change cursor to pointer when hovering over the button */
+    background-color: orange; /* Bootstrap primary color for the button */
+    color: white; /* White text color */
+    border: 1px solid orange; /* Border color to match the background */
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.searchForm button:hover {
+    background-color: darkorange; /* Darker shade when hovered */
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.grid-item {
+    display: none; /* Initially hidden */
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.grid-item.visible {
+    display: block; 
+}
+
+/* Styling for the dog information inside each grid item */
+.dog-info {
+    /* Add styles for the dog info here */
+}
