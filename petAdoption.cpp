@@ -36,6 +36,8 @@ void findBreedInfo();
 void showAllDogs();
 void showAllCustomers();
 void findall();
+void deleteDog();
+void UpdateDogAge();
 
 int main(void) {
     try {
@@ -55,6 +57,8 @@ int main(void) {
                  << "\n7. Show all Dogs"
                  << "\n8. Show all Customers"
                  << "\n9. Show all"
+                 << "\n10. Delete a Dog"
+                 << "\n11. Update a Dog age"
                  << "\n0. Exit"
                  << "\n\nChoice: ";
             cin >> option;
@@ -89,6 +93,12 @@ int main(void) {
                     break;
                 case 9:
                     findall();
+                    break;
+                case 10:
+                    deleteDog();
+                    break;
+                case 11:
+                    UpdateDogAge();
                     break;
             }
         }
@@ -183,6 +193,27 @@ res = prep_stmt->executeQuery();
  }
 
 
+void UpdateDogAge(){ 
+ 
+ int id;
+ int age;
+    
+ cout << "Enter the Dog id : ";
+ cin >> id;
+ cout << "Enter the Dog  new Age : ";
+ cin >> age;
+    
+ 
+prep_stmt = con->prepareStatement("UPDATE Dog_Profile SET Age = ? WHERE DogID = ?");
+prep_stmt->setInt(1, age);
+prep_stmt->setInt(2, id);
+res = prep_stmt->executeQuery();
+
+ cout << "Dog Age updated successfully ";
+ }
+ 
+
+
 void findBreedInfo(){ 
  
  int id;
@@ -206,6 +237,27 @@ res = prep_stmt->executeQuery();
      cout << res->getString("DiseasesProneTo") << " | ";
  }
  }
+
+void deleteDog(){ 
+ 
+ int id;
+    
+ cout << "Enter the Dog ID : ";
+ cin >> id;
+    
+ 
+prep_stmt = con->prepareStatement("Delete FROM Dog_Profile WHERE DogID = ?");
+prep_stmt->setInt(1, id);
+res = prep_stmt->executeQuery();
+
+ cout << "Dog Deleted Successfully ";
+
+
+ }
+ 
+
+
+
 
 
 void addDog(){ 
@@ -327,9 +379,34 @@ res = prep_stmt->executeQuery();
 
 
 void findall(){   
- 
-showAllCustomers();
-showAllDogs();
+ prep_stmt = con->prepareStatement("SELECT Dog_Profile.DogID, Dog_Profile.BreedID, Dog_Profile.DogName, Dog_Profile.Age, Dog_Profile.Size, Dog_Profile.AvailableForAdoption, Dog_Profile.Dog_Description, Customer_Profile.CustomerID, Customer_Profile.FirstName, Customer_Profile.LastName, Customer_Profile.PhoneNumber, Customer_Profile.Email, Customer_Profile.Cust_Address FROM Dog_Profile JOIN Customer_Profile ON Dog_Profile.DogID = Customer_Profile.CustomerID");
+
+res = prep_stmt->executeQuery();
+
+while (res->next()) {
+
+ /* Access column data by alias or column name */
+ cout << "CustomerID | FirstName | LastName | PhoneNumber | Email | Cust_Address |" <<endl;    
+     cout << res->getString("CustomerID") << " | ";
+     cout << res->getString("Firstname") << " | ";
+     cout << res->getString("LastName") << " | ";
+     cout << res->getString("PhoneNumber") << " | ";
+     cout << res->getString("Email") << " | ";
+     cout << res->getString("Cust_Address") << endl;
+     cout << "DogId | BreedId | DogName | Age | Size | AvailableForAdoption | Dog_Description | " <<endl;     
+     cout << res->getString("DogID") << " | ";
+     cout << res->getString("BreedID") << " | ";
+     cout << res->getString("DogName") << " | ";
+     cout << res->getString("Age") << " | ";
+     cout << res->getString("Size") << " | ";
+     cout << res->getString("AvailableForAdoption") << " | ";
+     cout << res->getString("Dog_Description") << endl;
+ }
+
+
+//showAllCustomers();
+//showAllDogs();
+
 
  }
 
