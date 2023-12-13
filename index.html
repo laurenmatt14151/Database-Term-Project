@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FAMU Adoption</title>
-    <link rel="stylesheet" href="styles.css"> <!--styles/styles.css -->
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
     <header>
@@ -57,24 +57,29 @@
         <div id="dogsGrid" class="grid-container">
             <!-- Dog items will be populated here by JavaScript -->
         </div>
-    
-        <!-- <div id="results">
-            Results will be inserted into this table 
+  
+        <div id="results">
+       
             <table id="resultsTable">
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Name</th>
-                        <th>Details</th>
-                    Add or remove columns as needed 
+                        <th>Breed ID</th>
+                        <th>Dog Name</th>
+												<th>Age</th>
+												<th>Size</th>
+												<th>Available</th>
+												<th>Description</th>
+                    
                     </tr>
                 </thead>
                 <tbody>
-                    Results will be inserted here by the JavaScript 
+                  
                 </tbody>
             </table>
-        </div> -->
+        </div> 
     </main>
+<!-- <script src="script.js"></script> -->
 
     <script>
         function toggleSearchForm() {
@@ -90,15 +95,30 @@
             recordsSection.style.display = recordsSection.style.display === 'none' ? 'block' : 'none';
         }
         function findDogById() {
-            var dogId = document.getElementById('dogIdInput').value; // Get dog ID from an input field
-            fetch('/findDogById?id=' + dogId)
+					//alert('finddogbyid');
+            //var dogId = document.getElementById('dogIdInput').value; // Get dog ID from an input field
+            var dogId = document.getElementById('searchId').value; // Get dog ID from an input field
+						fetch('/findDogById?id=' + dogId)
                 .then(response => response.json())
                 .then(data => {
                     console.log(data);
-                    // Process and display the data on your page
+							 const resultsTable = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
+      resultsTable.innerHTML = ''; // Clear previous results
+									data.forEach((row) => {
+        let newRow = resultsTable.insertRow();
+        newRow.insertCell(0).innerHTML = row.DogID || 'N/A';
+        newRow.insertCell(1).innerHTML = row.BreedID || 'N/A';
+        newRow.insertCell(2).innerHTML = row.DogName || 'N/A';
+        newRow.insertCell(3).innerHTML = row.Age || 'N/A';
+				newRow.insertCell(4).innerHTML = row.Size || 'N/A';
+				newRow.insertCell(5).innerHTML = row.AvailableForAdoption || 'N/A';
+        newRow.insertCell(6).innerHTML = row.Dog_Description || 'N/A';
+               })
+							      // Process and display the data on your page
                 })
                 .catch(error => console.error('Error:', error));
         }
     </script>
+	
 </body>
 </html>
