@@ -100,7 +100,78 @@ int main(void) {
     return EXIT_SUCCESS;
 }
 
+void addDog(){ 
+  string dogName, dogDescription, breedName, hairType, diseasesProneTo,  size, availableForAdoption;
+    int age, breedID;
 
+    cout << "Enter Dog Name: ";
+    cin >> dogName;
+
+    cout << "Enter Breed ID: ";
+    cin >> breedID;
+
+    cout << "Enter Dog Age: ";
+    cin >> age;
+
+    cout << "Enter Dog size: ";
+    cin >> size;
+
+    cout << "Is available For Adoption: ";
+    cin >> availableForAdoption;
+
+    cout << "Enter Dog description: ";
+    cin.ignore();
+    getline(cin, dogDescription);
+
+
+
+    prep_stmt = con->prepareStatement("INSERT INTO Dog_Profile (BreedID, DogName, Age, Size, AvailableForAdoption, Dog_Description) VALUES (?,?,?,?,?,?)");
+    prep_stmt->setInt(1, breedID);
+    prep_stmt->setString(2, dogName);
+    prep_stmt->setInt(3, age);
+    prep_stmt->setString(4, size);
+    prep_stmt->setString(5, availableForAdoption);
+    prep_stmt->setString(6, dogDescription);
+
+    prep_stmt->executeUpdate();
+
+    cout << "Dog added successfully!" << endl;
+}
+
+void addCustomer(){ 
+string custFName, custLName, Email, Cust_Address;
+int PhoneNumber;
+
+    cout << "Enter first Name: ";
+    cin >> custFName;
+
+    cout << "Enter last name: ";
+    cin >> custLName;
+
+    cout << "Enter Phone Number: ";
+    cin >> PhoneNumber;
+
+    cout << "Enter email: ";
+    cin >> Email;
+
+    cout << "Enter Address: ";
+    cin >> Cust_Address;
+
+
+     
+    prep_stmt = con->prepareStatement("INSERT INTO Customer_Profile (FirstName,LastName,PhoneNumber,Email,Cust_Address) VALUES (?,?,?,?,?)");
+    prep_stmt->setString(1, custFName);
+    prep_stmt->setString(2, custLName);
+    prep_stmt->setInt(3, PhoneNumber);
+    prep_stmt->setString(4, Email);
+    prep_stmt->setString(5, Cust_Address);
+
+
+    prep_stmt->executeUpdate();
+
+    cout << "Customer added successfully!" << endl;
+ 
+}
 
 void findDogbyid() {
      
@@ -208,80 +279,6 @@ res = prep_stmt->executeQuery();
  }
 
 
-void addDog(){ 
-  string dogName, dogDescription, breedName, hairType, diseasesProneTo,  size, availableForAdoption;
-    int age, breedID;
-
-    cout << "Enter Dog Name: ";
-    cin >> dogName;
-
-    cout << "Enter Breed ID: ";
-    cin >> breedID;
-
-    cout << "Enter Dog Age: ";
-    cin >> age;
-
-    cout << "Enter Dog size: ";
-    cin >> size;
-
-    cout << "Is available For Adoption: ";
-    cin >> availableForAdoption;
-
-    cout << "Enter Dog description: ";
-    cin >> dogDescription;
-    getline(cin, dogDescription);
-
-
-
-    prep_stmt = con->prepareStatement("INSERT INTO Dog_Profile (BreedID, DogName, Age, Size, AvailableForAdoption, Dog_Description) VALUES (?,?,?,?,?,?)");
-    prep_stmt->setString(1, dogName);
-    prep_stmt->setInt(2, breedID);
-    prep_stmt->setInt(3, age);
-    prep_stmt->setString(4, size);
-    prep_stmt->setString(5, availableForAdoption);
-    prep_stmt->setString(6, dogDescription);
-
-    prep_stmt->executeUpdate();
-
-    cout << "Dog added successfully!" << endl;
-}
-
-void addCustomer(){ 
-string custFName, custLName, Email, Cust_Address;
-int PhoneNumber;
-
-    cout << "Enter first Name: ";
-    cin >> custFName;
-
-    cout << "Enter last name: ";
-    cin >> custLName;
-
-    cout << "Enter Phone Number: ";
-    cin >> PhoneNumber;
-
-    cout << "Enter email: ";
-    cin >> Email;
-
-    cout << "Enter Address: ";
-    cin >> Cust_Address;
-
-
-     
-    prep_stmt = con->prepareStatement("INSERT INTO Customer_Profile (FirstName,LastName,PhoneNumber,Email,Cust_Address) VALUES (?,?,?,?,?)");
-    prep_stmt->setString(1, custFName);
-    prep_stmt->setString(2, custLName);
-    prep_stmt->setInt(3, PhoneNumber);
-    prep_stmt->setString(4, Email);
-    prep_stmt->setString(5, Cust_Address);
-
-
-    prep_stmt->executeUpdate();
-
-    cout << "Customer added successfully!" << endl;
- 
-}
-
-
 void showAllDogs(){  
  
 
@@ -333,4 +330,3 @@ showAllCustomers();
 showAllDogs();
 
  }
-
