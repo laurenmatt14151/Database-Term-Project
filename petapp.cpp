@@ -4,6 +4,7 @@ Group: Lauren Matthews, Alaisha Johnson, Joshua Douglas
 */
 #include <stdlib.h>
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include "mysql_connection.h"
 #include <cppconn/driver.h>
@@ -33,9 +34,12 @@ void findDogbyid();
 void findCustomerbyid();
 void findAdoptionRecord();
 void findBreedInfo();
+void updateDogAge();
+void deleteDog();
 void showAllDogs();
 void showAllCustomers();
 void findall();
+void totalDogs();
 
 int main(void) {
     try {
@@ -46,19 +50,22 @@ int main(void) {
         int option = 1;
 
         while (option != 0) {
-            cout << "------------------------------------------"
+            cout << "\n------------------------------------------"
                  << "MENU"
                  << "------------------------------------------"
-                 << "\n1. Add a Dog"
+                 << "\n\n1. Add a Dog"
                  << "\n2. Add a Customer"
                  << "\n3. Find a Dog by id"
                  << "\n4. Find a Customer by id"
                  << "\n5. Find Adoption Record by Customer id"
                  << "\n6. Find Breed info by Breed id"
-                 << "\n7. Show all Dogs"
-                 << "\n8. Show all Customers"
-                 << "\n9. Show all"
-                 << "\n0. Exit"
+                 << "\n7. Update a dogs age"
+                 << "\n8. Delete a dog"
+                 << "\n9. Show all Dogs"
+                 << "\n10. Show all Customers"
+                 << "\n11. Show all"
+                 << "\n12. Total dogs available for adoption"
+                 << "\n0. Exit\n"
                  << "------------------------------------------"
                  << "\n\nChoice: ";
             cin >> option;
@@ -86,13 +93,22 @@ int main(void) {
                     findBreedInfo();
                     break;
                 case 7:
-                    showAllDogs();
+                    updateDogAge();
                     break;
                 case 8:
-                    showAllCustomers();
+                    deleteDog();
                     break;
                 case 9:
+                    showAllDogs();
+                    break;
+                case 10:
+                    showAllCustomers();
+                    break;
+                case 11:
                     findall();
+                    break;
+                case 12:
+                    totalDogs();
                     break;
             }
         }
@@ -103,7 +119,7 @@ int main(void) {
     cout << endl;
     return EXIT_SUCCESS;
 }
-
+//CASE 1
 void addDog(){ 
   string dogName, dogDescription, breedName, hairType, diseasesProneTo,  size, availableForAdoption;
     int age, breedID;
@@ -145,6 +161,7 @@ void addDog(){
     cout << "Dog added successfully!" << endl;
 }
 
+//CASE 2
 void addCustomer(){ 
 string custFName, custLName, Email, Cust_Address;
 int PhoneNumber;
@@ -183,6 +200,7 @@ int PhoneNumber;
  
 }
 
+//CASE 3
 void findDogbyid() {
      
  
@@ -203,16 +221,18 @@ res = prep_stmt->executeQuery();
 
  /* Access column data by alias or column name */
      cout << "DogId | BreedId | DogName | Age | Size | AvailableForAdoption | Dog_Description | " <<endl;
-     cout << res->getString("DogId") << " | ";
-     cout << res->getString("BreedId") << " | ";
-     cout << res->getString("DogName") << " | ";
-     cout << res->getString("Age") << " | ";
-     cout << res->getString("Size") << " | ";
-     cout << res->getString("AvailableForAdoption") << endl;
+     cout << res->getString("DogId") << "     |    ";
+     cout << res->getString("BreedId") << "    | ";
+     cout << res->getString("DogName") << "   | ";
+     cout << res->getString("Age") << "   | ";
+     cout << res->getString("Size") << "| ";
+     cout << res->getString("AvailableForAdoption") << "                 |  ";
      cout << res->getString("Dog_Description") << endl;
  
  }
 }
+
+//CASE 4
 void findCustomerbyid() {
      
  
@@ -233,17 +253,18 @@ res = prep_stmt->executeQuery();
  while (res->next()) {
 
  /* Access column data by alias or column name */
- cout << "CustomerID | FirstName | LastName | PhoneNumber | Email | Cust_Address |" <<endl;    
-     cout << res->getString("CustomerID") << " | ";
-     cout << res->getString("FirstName") << " | ";
-     cout << res->getString("LastName") << " | ";
+ cout << "CustomerID | FirstName | LastName | PhoneNumber |      Email             | Cust_Address " <<endl;    
+     cout << res->getString("CustomerID") << "          | ";
+     cout << res->getString("FirstName") << "     | ";
+     cout << res->getString("LastName") << "   | ";
      cout << res->getString("PhoneNumber") << " | ";
-     cout << res->getString("Email") << endl;
+     cout << res->getString("Email") << " | ";
      cout << res->getString("Cust_Address") << endl;
  }
      
  }
 
+//CASE 5
  void findAdoptionRecord(){    
  
  int id;
@@ -264,14 +285,14 @@ res = prep_stmt->executeQuery();
 
  /* Access column data by alias or column name */
  cout << "AdoptionID | CustomerId | DogID | AdoptionDate |" <<endl;    
-     cout << res->getString("AdoptionID") << " | ";
-     cout << res->getString("CustomerId") << " | ";
-     cout << res->getString("DogID") << " | ";
+     cout << res->getString("AdoptionID") << "          | ";
+     cout << res->getString("CustomerId") << "           | ";
+     cout << res->getString("DogID") << "      | ";
      cout << res->getString("AdoptionDate") << endl;
  }
  }
 
-
+//CASE 6
 void findBreedInfo(){ 
  
  int id;
@@ -291,14 +312,52 @@ res = prep_stmt->executeQuery();
 
  /* Access column data by alias or column name */
  cout << "BreedID | BreedName | HairType | DiseasesProneTo " <<endl;    
-     cout << res->getString("BreedID") << " | ";
-     cout << res->getString("BreedName") << " | ";
-     cout << res->getString("HairType") << " | ";
-     cout << res->getString("DiseasesProneTo") << " | ";
+     cout << res->getString("BreedID") << "       | ";
+     cout << res->getString("BreedName") << "   | ";
+     cout << res->getString("HairType") << "   | ";
+     cout << res->getString("DiseasesProneTo") << endl;
  }
  }
 
+//CASE 7
+void updateDogAge(){ 
+ 
+ int id;
+ int age;
+    
+ cout << "Enter the Dog id : ";
+ cin >> id;
+ cout << "Enter the Dog  new Age : ";
+ cin >> age;
+    
+ 
+prep_stmt = con->prepareStatement("UPDATE Dog_Profile SET Age = ? WHERE DogID = ?");
+prep_stmt->setInt(1, age);
+prep_stmt->setInt(2, id);
+res = prep_stmt->executeQuery();
 
+ cout << "Dog Age updated successfully ";
+ }
+
+//CASE 8
+void deleteDog(){ 
+ 
+ int id;
+    
+ cout << "Enter the Dog ID : ";
+ cin >> id;
+    
+ 
+prep_stmt = con->prepareStatement("Delete FROM Dog_Profile WHERE DogID = ?");
+prep_stmt->setInt(1, id);
+res = prep_stmt->executeQuery();
+
+ cout << "Dog Deleted Successfully ";
+
+
+ }
+
+//CASE 9
 void showAllDogs(){  
  
 
@@ -306,25 +365,26 @@ prep_stmt = con->prepareStatement("SELECT * FROM Dog_Profile");
 
 res = prep_stmt->executeQuery();
 
- cout << "------------------------------------------"
+ cout << "\n------------------------------------------"
       << "OUR DOGS"
-      << "------------------------------------------";
+      << "------------------------------------------" << endl;
 
 cout << "DogId | BreedId | DogName | Age | Size | AvailableForAdoption | Dog_Description | " <<endl;
  while (res->next()) {
 
  /* Access column data by alias or column name */
 
-     cout << res->getString("DogID") << " | ";
-     cout << res->getString("BreedID") << " | ";
-     cout << res->getString("DogName") << " | ";
-     cout << res->getString("Age") << " | ";
+     cout << res->getString("DogID") << "     | ";
+     cout << res->getString("BreedID") << "       | ";
+     cout << res->getString("DogName") << "    | ";
+     cout << res->getString("Age") << "  | ";
      cout << res->getString("Size") << " | ";
-     cout << res->getString("AvailableForAdoption") << " | ";
+     cout << res->getString("AvailableForAdoption") << "                   | ";
      cout << res->getString("Dog_Description") << endl;
  }
  }
 
+//CASE 10
 void showAllCustomers(){   
  
 
@@ -334,7 +394,7 @@ res = prep_stmt->executeQuery();
 
 cout << "------------------------------------------"
       << "OUR CUSTOMERS"
-      << "------------------------------------------";
+      << "------------------------------------------" << endl;
 
 cout << "CustomerID | FirstName | LastName | PhoneNumber | Email | Cust_Address |" <<endl;    
  
@@ -351,10 +411,19 @@ cout << "CustomerID | FirstName | LastName | PhoneNumber | Email | Cust_Address 
  }
  }
 
-
+//CASE 11
 void findall(){   
  
 showAllCustomers();
 showAllDogs();
 
+ }
+//CASE 12
+ void totalDogs(){
+    prep_stmt = con->prepareStatement("Select COUNT(DogID) AS TotalDogs FROM Dog_Profile");
+    res = prep_stmt->executeQuery();
+
+    while (res->next()){
+        cout << "Total Dogs: " << res->getInt("TotalDogs") << endl;
+    }
  }
