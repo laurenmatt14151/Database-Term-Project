@@ -46,7 +46,10 @@ int main(void) {
         int option = 1;
 
         while (option != 0) {
-            cout << "\n1. Add a Dog"
+            cout << "------------------------------------------"
+                 << "MENU"
+                 << "------------------------------------------"
+                 << "\n1. Add a Dog"
                  << "\n2. Add a Customer"
                  << "\n3. Find a Dog by id"
                  << "\n4. Find a Customer by id"
@@ -56,6 +59,7 @@ int main(void) {
                  << "\n8. Show all Customers"
                  << "\n9. Show all"
                  << "\n0. Exit"
+                 << "------------------------------------------"
                  << "\n\nChoice: ";
             cin >> option;
 
@@ -104,6 +108,9 @@ void addDog(){
   string dogName, dogDescription, breedName, hairType, diseasesProneTo,  size, availableForAdoption;
     int age, breedID;
 
+    cout << "------------------------------------------"
+         << "Enter the New Dog's Information"
+         << "------------------------------------------";
     cout << "Enter Dog Name: ";
     cin >> dogName;
 
@@ -142,6 +149,9 @@ void addCustomer(){
 string custFName, custLName, Email, Cust_Address;
 int PhoneNumber;
 
+    cout << "------------------------------------------"
+         << "Enter the New Customer's Information"
+         << "------------------------------------------";
     cout << "Enter first Name: ";
     cin >> custFName;
 
@@ -177,7 +187,9 @@ void findDogbyid() {
      
  
  int id;
-    
+cout << "------------------------------------------"
+     << "Find a dog by it's ID"
+     << "------------------------------------------";
  cout << "Enter the Dog ID : ";
  cin >> id;
     
@@ -205,7 +217,10 @@ void findCustomerbyid() {
      
  
  int id;
-    
+
+cout << "------------------------------------------"
+     << "Find a customer by their ID"
+     << "------------------------------------------";
  cout << "Enter the Customer ID : ";
  cin >> id;
     
@@ -232,6 +247,9 @@ res = prep_stmt->executeQuery();
  void findAdoptionRecord(){    
  
  int id;
+ cout << "------------------------------------------"
+      << "Adoption Record Locator"
+      << "------------------------------------------";
     
  cout << "Enter the Customer ID : ";
  cin >> id;
@@ -257,7 +275,9 @@ res = prep_stmt->executeQuery();
 void findBreedInfo(){ 
  
  int id;
-    
+     cout << "------------------------------------------"
+          << "Adoption Record Locator"
+          << "------------------------------------------";
  cout << "Enter the Breed ID : ";
  cin >> id;
     
@@ -286,6 +306,10 @@ prep_stmt = con->prepareStatement("SELECT * FROM Dog_Profile");
 
 res = prep_stmt->executeQuery();
 
+ cout << "------------------------------------------"
+      << "OUR DOGS"
+      << "------------------------------------------";
+
 cout << "DogId | BreedId | DogName | Age | Size | AvailableForAdoption | Dog_Description | " <<endl;
  while (res->next()) {
 
@@ -307,6 +331,10 @@ void showAllCustomers(){
 prep_stmt = con->prepareStatement("SELECT * FROM Customer_Profile");
 
 res = prep_stmt->executeQuery();
+
+cout << "------------------------------------------"
+      << "OUR CUSTOMERS"
+      << "------------------------------------------";
 
 cout << "CustomerID | FirstName | LastName | PhoneNumber | Email | Cust_Address |" <<endl;    
  
