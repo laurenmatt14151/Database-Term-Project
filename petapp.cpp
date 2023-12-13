@@ -420,10 +420,10 @@ showAllDogs();
  }
 //CASE 12
  void totalDogs(){
-    prep_stmt = con->prepareStatement("Select COUNT(DogID) AS TotalDogs FROM Dog_Profile");
+    prep_stmt = con->prepareStatement("Select COUNT(AvailableForAdoption) AS TotalDogsAvailable FROM Dog_Profile WHERE AvailableForAdoption = 1");
     res = prep_stmt->executeQuery();
 
     while (res->next()){
-        cout << "Total Dogs: " << res->getInt("TotalDogs") << endl;
+        cout << "Total Dogs: " << res->getInt("TotalDogsAvailable") << endl;
     }
  }
